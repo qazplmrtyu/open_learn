@@ -1,2 +1,4 @@
 E:\VS2019chengxu\OpenCVcourse-\x64\Debug\OpenCVcourse-.exe
 E:\VS2019chengxu\OpenCVcourse-\x64\Debug\OpenCVcourse-.pdb
+D:\opencv\open_learn\OpenCVcourse-\x64\Debug\OpenCVcourse-.exe
+D:\opencv\open_learn\OpenCVcourse-\x64\Debug\OpenCVcourse-.pdb

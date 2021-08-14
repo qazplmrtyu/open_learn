@@ -9,6 +9,7 @@ int area;
 int i;
 string objectType;
 
+//////////////////轮廓检测////////////////////////////////
 //获得轮廓
 void getContours(Mat imgDil, Mat img) 
 {
@@ -19,8 +20,9 @@ void getContours(Mat imgDil, Mat img)
 	findContours(imgDil, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);//寻找图像轮廓
 	//drawContours(img, contours, -1, Scalar(255, 0, 255), 2);//绘制图像轮廓
 
-	/*vector<vector<Point>> conPoly(contours.size());
-	vector<Rect> boundRect(contours.size());*/
+
+	vector<vector<Point>> conPoly(contours.size());//声明轮廓角点数组，大小与轮廓数组一致
+	vector<Rect> boundRect(contours.size());//声明轮廓矩形边界数组
 
 	///查看轮廓面积，绘制特定轮廓
 	for (int i = 0; i < contours.size(); i++)//遍历所有轮廓
@@ -28,9 +30,6 @@ void getContours(Mat imgDil, Mat img)
 		int area = contourArea(contours[i]);
 		cout << area << endl;//取得每个轮廓面积并输出
 	
-		vector<vector<Point>> conPoly(contours.size());//声明轮廓角点数组，大小与轮廓数组一致
-		vector<Rect> boundRect(contours.size());//声明轮廓矩形边界数组
-
 	
 		if (area > 1000) ///过滤面积小的轮廓干扰
 		{
@@ -39,24 +38,27 @@ void getContours(Mat imgDil, Mat img)
 			
 
 			cout << conPoly[i].size() << endl;//打印每个轮廓角点数目
-			//boundRect[i] = boundingRect(conPoly[i]);//矩形边界
+			boundRect[i] = boundingRect(conPoly[i]);//矩形边界
 			//rectangle(img, boundRect[i].tl(), boundRect[i].br(), Scalar(0, 255, 0),5);//通过左上右下点绘制矩形
-		}
-		int objCor = (int)conPoly[i].size();
-
-		if (objCor == 3) { objectType = "Tri"; }
-		 if (objCor == 4) { objectType = "Rect"; }
-		/*{
-			float aspRatio = (float)boundRect[i].width / (float)boundRect[i].height;
-			cout << aspRatio << endl;
-			if (aspRatio > 0.95 && aspRatio < 1.05) { objectType = "Square"; }
-			else { objectType = "Rect"; }
-		}*/
-		 if (objCor > 4) { objectType = "Circle"; }
+		
+		///对不同角点数目轮廓分类
+			int objCor = (int)conPoly[i].size();
+			if (objCor == 3) { objectType = "Tri"; }
+			if (objCor == 4) { objectType = "Rect"; }
+			{
+				//取出矩形边界的高和宽,判断正方形
+				float aspRatio = (float)boundRect[i].width / (float)boundRect[i].height;
+				cout << aspRatio << endl;
+				if (aspRatio > 0.95 && aspRatio < 1.05) { objectType = "Square"; }//&&、||、!
+				else { objectType = "Rect"; }
+			}
+			if (objCor > 4) { objectType = "Circle"; }
 
 		drawContours(img, conPoly, i, Scalar(255, 0, 255), 2);//画出角点曲线
 		rectangle(img, boundRect[i].tl(), boundRect[i].br(), Scalar(0, 255, 0),5);//通过左上右下点绘制矩形
-		putText(img, objectType, { boundRect[i].x,boundRect[i].y-5 }, FONT_HERSHEY_PLAIN, 1, Scalar(0, 69, 255), 2);
+		//以矩形边界为坐标点输出文字
+		putText(img, objectType, { boundRect[i].x,boundRect[i].y-5 }, FONT_HERSHEY_PLAIN, 0.75, Scalar(0, 69, 255), 1);
+		}
 	}
 
 	

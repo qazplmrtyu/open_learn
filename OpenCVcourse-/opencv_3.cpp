@@ -17,7 +17,7 @@ void main()
 	//resize(img, imgResize, Size(640,480));//按照像素缩小
 	resize(img, imgResize, Size(),0.5,0.5);//按照比例缩小
 	
-	Rect roi(200, 80, 300, 320);//定义裁剪矩形的x,y坐标和宽度及长度
+	Rect roi(200, 80, 300, 320);//定义裁剪矩形的左上角x,y坐标和宽度及长度
 	imgCrop = img(roi);
 
 

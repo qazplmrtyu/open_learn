@@ -1,3 +1,3 @@
-﻿  opencv_6.cpp
-E:\VS2019chengxu\OpenCVcourse-\opencv_6.cpp(50,2): warning C4326: “main”的返回类型应为“int”而非“void”
-  OpenCVcourse-.vcxproj -> E:\VS2019chengxu\OpenCVcourse-\x64\Debug\OpenCVcourse-.exe
+﻿  project_3.cpp
+D:\opencv\open_learn\OpenCVcourse-\project_3.cpp(13,1): warning C4326: “main”的返回类型应为“int”而非“void”
+  OpenCVcourse-.vcxproj -> D:\opencv\open_learn\OpenCVcourse-\x64\Debug\OpenCVcourse-.exe
